@@ -11,7 +11,15 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const jobs = [
+app.use('*', (req, res) => {
+  res.status(404).json({ msg: 'not found' });
+});
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ msg: 'an error occured', err });
+});
+
+let jobs = [
   { id: nanoid(), company: 'google', position: 'backend' },
   { id: nanoid(), company: 'apple', position: 'frontend' },
   { id: nanoid(), company: 'netflix', position: 'midend lol' },
@@ -30,6 +38,15 @@ app.get('/api/v1/jobs', (req, res) => {
   res.status(200).json({ jobs });
 });
 
+app.get('/api/v1/jobs/:id', (req, res) => {
+  const { id } = req.params;
+  const job = jobs.find((job) => job.id === id);
+  if (!job) {
+    return res.status(404).json({ msg: `No job with id ${id}` });
+  }
+  res.status(200).json({ job });
+});
+
 app.post('/api/v1/jobs', (req, res) => {
   const { company, position } = req.body;
   if (!company || !position) {
@@ -41,6 +58,33 @@ app.post('/api/v1/jobs', (req, res) => {
   const job = { id: id, company: company, position: position };
   jobs.push(job);
   res.status(201).json({ job });
+});
+
+app.patch('/api/v1/jobs/:id', (req, res) => {
+  const { company, position } = req.body;
+  if (!company || !position) {
+    return res.status(404).json({ msg: `Please insert company and position` });
+  }
+  const { id } = req.params;
+  const job = jobs.find((job) => job.id === id);
+  if (!job) {
+    return res.status(404).json({ msg: `no job found with id: ${id}` });
+  }
+
+  job.company = company;
+  job.position = position;
+  res.status(200).json({ msg: 'job modified successfully', job });
+});
+
+app.delete('/api/v1/jobs/:id', (req, res) => {
+  const { id } = req.params;
+  const job = jobs.find((job) => job.id === id);
+  if (!job) {
+    return res.status(404).json({ msg: `no job found with id: ${id}` });
+  }
+  const newJobs = jobs.filter((job) => job.id !== id);
+  jobs = newJobs;
+  res.status(200).json({ msg: 'job deleted successfully', jobs });
 });
 
 const port = process.env.PORT || 5001;
