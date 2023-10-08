@@ -60,3 +60,12 @@ export const validateRegister = withValidationErrors([
   body('location').notEmpty().withMessage('location is required'),
   body('lastName').notEmpty().withMessage('Last Name is required'),
 ]);
+
+export const validateLogin = withValidationErrors([
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('Invalid email format'),
+  body('password').notEmpty().withMessage('password is required'),
+]);
