@@ -19,6 +19,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ msg: 'an error occured', err });
 });
 
+//for ensuring everything works.. WILL BE REMOVED
 let jobs = [
   { id: nanoid(), company: 'google', position: 'backend' },
   { id: nanoid(), company: 'apple', position: 'frontend' },
