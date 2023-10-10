@@ -57,7 +57,7 @@ const EditJob = () => {
             defaultValue={job.jobType}
             list={Object.values(JOB_TYPE)}
           />
-          <SubmitBtn formData />
+          <SubmitBtn formBtn />
         </div>
       </Form>
     </Wrapper>
