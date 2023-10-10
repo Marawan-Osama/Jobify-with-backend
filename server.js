@@ -9,15 +9,22 @@ import mongoose from 'mongoose';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 import { authenticateUser } from './middleware/authMiddleware.js';
 import cookieParser from 'cookie-parser';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 dotenv.config();
 const app = express();
 app.use(cookieParser());
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+app.use(express.static(path.resolve(__dirname, './public')));
 
 app.get('/api/v1/test', (req, res) => {
   res.json({ msg: 'test route' });
