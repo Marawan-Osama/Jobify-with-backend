@@ -36,6 +36,7 @@ export const deleteJob = async (req, res) => {
 };
 
 export const showStats = async (req, res) => {
+  //example values, will be automated
   const defaultStats = {
     pending: 22,
     interview: 11,
