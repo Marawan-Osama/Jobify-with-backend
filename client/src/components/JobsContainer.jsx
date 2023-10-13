@@ -3,6 +3,9 @@ import Wrapper from '../assets/wrappers/JobsContainer';
 import { useAllJobsContext } from '../pages/AllJobs';
 import PageBtnContainer from './PageBtnContainer';
 
+//Jobs container is responsible for rendering all the jobs and the pagination buttons.
+//It uses the useAllJobsContext hook to get the data from the context provider.
+//If there are no jobs to display, it renders a message.
 const JobsContainer = () => {
   const { data } = useAllJobsContext();
   const { jobs, totalJobs, numOfPages } = data;
