@@ -5,6 +5,8 @@ import {
 } from '../errors/customErrors.js';
 import { verifyJWT } from '../utils/tokenUtils.js';
 
+//this middleware checks if the user is authenticated, and if so, it adds the user object to the request object
+//this middleware is used in the routes that require authentication
 export const authenticateUser = (req, res, next) => {
   const { token } = req.cookies;
   if (!token) throw new UnauthenticatedError('authentication invalid');
