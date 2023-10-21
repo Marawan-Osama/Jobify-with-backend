@@ -4,6 +4,9 @@ import Job from '../models/jobModel.js';
 import cloudinary from 'cloudinary';
 import { formatImage } from '../middleware/multerMiddleware.js';
 
+//this controller will handle the user registration, login, and getting the current user
+//it will also handle the user avatar update
+
 export const getCurrentUser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
   const userWithoutPassword = user.toJSON();
